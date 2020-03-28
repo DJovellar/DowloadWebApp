@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         setContentView(R.layout.activity_main);
 
         dowloadedWeb = findViewById(R.id.dowloadedWeb);
+        dowloadedWeb.setMovementMethod(new ScrollingMovementMethod());
         dowloadedImage = findViewById(R.id.dowloadedImage);
 
         this.h = new Handler() {
