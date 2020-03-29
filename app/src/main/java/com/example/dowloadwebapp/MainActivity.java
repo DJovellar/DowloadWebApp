@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     private ImageView dowloadedImage;
     private Button dowloadWebButton;
     private Button dowloadImageButton;
-    final String webUrl = "https://www.marca.com/";
+    final String webUrl = "https://www.spanishbowl.com/";
     final String imageUrl = "https://s.inyourpocket.com/gallery/113383.jpg";
 
     @SuppressLint("HandlerLeak")
@@ -52,10 +52,10 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         this.h = new Handler() {
             @Override
             public void handleMessage(Message msg) {
-
                 switch (msg.what) {
                     case 0:
                         dowloadedWeb.append(msg.obj.toString());
+                        dowloadedWeb.append(" \n");
                         break;
                     case 1:
                         dowloadedImage.setImageBitmap((Bitmap) msg.obj);
