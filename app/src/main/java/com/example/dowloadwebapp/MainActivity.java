@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,6 +16,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -42,6 +45,10 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         dowloadedWeb.setMovementMethod(new ScrollingMovementMethod());
         dowloadedImage = findViewById(R.id.dowloadedImage);
 
+        //Check network state
+        checkNetwork();
+
+        //Obtain messages from threads
         this.h = new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -65,6 +72,37 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         dowloadImageButton.setOnClickListener(this);
 
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkNetwork();
+    }
+
+    public void checkNetwork() {
+        //Check network
+        ConnectivityManager connectivityManager =  (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+        if (networkInfo != null) {
+            if (networkInfo.isConnected()) {
+                if (networkInfo.getType() == connectivityManager.TYPE_WIFI) {
+                    Toast.makeText(this, "Wifi connected!", Toast.LENGTH_SHORT).show();
+                }
+                if (networkInfo.getType() == connectivityManager.TYPE_MOBILE) {
+                    Toast.makeText(this, "Mobile connected!", Toast.LENGTH_SHORT).show();
+                }
+            }
+            else {
+                Toast.makeText(this, "No network connected!!", Toast.LENGTH_SHORT).show();
+            }
+        }
+        else {
+            Toast.makeText(this, "No network operating!!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
     @Override
     public void onClick(View v) {
